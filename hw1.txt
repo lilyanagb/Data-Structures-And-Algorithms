@@ -1,6 +1,5 @@
-https://www.hackerrank.com/contests/sda-hw-1
-
-//1#include <cmath>
+//1
+#include <cmath>
 #include <cstdio>
 #include <vector>
 #include <iostream>
