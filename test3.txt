@@ -1,0 +1,164 @@
+//#include <cmath>
+//#include <cstdio>
+//#include <vector>
+//#include <iostream>
+//#include <algorithm>
+//using namespace std;
+//
+//struct Node {
+//    Node* left;
+//    Node* right;
+//    int value;
+//    Node(int value) {
+//        this->value = value;
+//        this->left = NULL;
+//        this->right = NULL;
+//    }
+//};
+//
+//class BST {
+//
+//public:
+//    BST() {
+//        root = NULL;
+//    }
+//    void insert(int value) {
+//        root = insert(root, value);
+//    }
+//
+//    void printSpecific(int dividedBy) {
+//        // TODO implement this function
+//        root = print(root, dividedBy);
+//    }
+//
+//private:
+//    // you can implemented helper functions if you want
+//
+//    Node* print(Node* root, int dividedBy) {
+//        if (root == nullptr) {
+//            return nullptr;
+//        }
+//        else if (root->left == nullptr && root->right == nullptr) {
+//            return nullptr;
+//        }
+//        else {
+//            if (root->value % dividedBy == 0) {
+//                cout << root->value << " ";
+//            }
+//            root->left = print(root->left, dividedBy);
+//            root->right = print(root->right, dividedBy);
+//        }
+//        return root;
+//       
+//    }
+//
+//
+//    Node* root;
+//
+//    Node* insert(Node* curNode, int value) {
+//        if (curNode == NULL) {
+//            curNode = new Node(value);
+//        }
+//        else if (curNode->value < value) {
+//            curNode->right = insert(curNode->right, value);
+//        }
+//        else if (curNode->value > value) {
+//            curNode->left = insert(curNode->left, value);
+//        }
+//        else {
+//            //if we already have this value at the tree - do nothing
+//        }
+//        return curNode;
+//    }
+//};
+//int main() {
+//    int n;
+//    cin >> n;
+//    int value;
+//    BST tree;
+//    for (int i = 0; i < n; i++) {
+//        cin >> value;
+//        tree.insert(value);
+//    }
+//    int dividedBy;
+//    cin >> dividedBy;
+//    tree.printSpecific(dividedBy);
+//    return 0;
+//}
+
+//2
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* leftNode;
+    Node* rightNode;
+    Node(int d) {
+        data = d;
+        leftNode = NULL;
+        rightNode = NULL;
+    }
+};
+
+class Solution {
+public:
+    Node* insert(Node* root, int data) {
+        if (root == NULL) {
+            return new Node(data);
+        }
+        else {
+            Node* cur;
+            if (data <= root->data) {
+                cur = insert(root->leftNode, data);
+                root->leftNode = cur;
+            }
+            else {
+                cur = insert(root->rightNode, data);
+                root->rightNode = cur;
+            }
+
+            return root;
+        }
+    }
+
+    int sum = 0;
+    void leaves(Node* root) {
+        if (root == nullptr) {
+            return;
+        }
+        if (root->leftNode == nullptr && root->rightNode == nullptr) {
+            if (root->data % 2 != 0) {
+                sum += root->data;
+            }
+        }
+        else {
+            leaves(root->leftNode);
+            leaves(root->rightNode);
+        }
+    }
+
+
+}; //End of Solution
+
+int main() {
+
+    Solution myTree;
+    Node* root = NULL;
+
+    int t;
+    int data;
+
+    std::cin >> t;
+
+    while (t-- > 0) {
+        std::cin >> data;
+        root = myTree.insert(root, data);
+    }
+
+    myTree.leaves(root);
+    cout<<myTree.sum;
+    return 0;
+}

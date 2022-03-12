@@ -1,0 +1,69 @@
+//1
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <string>
+using namespace std;
+
+
+int main() {
+    long count;
+    cin >> count;
+    string s;
+
+    unordered_map<string, long> mp;
+    vector<string> str;
+    while(count--) {
+        cin >> s;
+       unordered_map<string, long>::iterator it = mp.find(s);
+
+        if (it != mp.end()) {
+            it->second++;
+        }
+        else {
+            mp.insert(make_pair(s, 1));
+        }
+        str.push_back(s);
+    }
+    for (auto x : str) {
+        cout << mp[x] << " ";
+ }
+    return 0;
+}
+
+//2
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <string>
+using namespace std;
+
+
+int main() {
+    long count;
+    cin >> count;
+    long s;
+
+    unordered_map<long, long> mp;
+    vector<long> str;
+    while(count--) {
+        cin >> s;
+       unordered_map<long, long>::iterator it = mp.find(s);
+
+        if (it != mp.end()) {
+            it->second++;
+        }
+        else {
+            mp.insert(make_pair(s, 1));
+        }
+        str.push_back(s);
+    }
+    
+    int sum=0;
+    for (auto x : str) {
+        if(mp[x] % 2 != 0)
+      sum += x;
+ }
+    cout<<sum;
+    return 0;
+}

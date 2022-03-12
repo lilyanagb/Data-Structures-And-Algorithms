@@ -1,0 +1,75 @@
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+struct compareBySecond {
+    bool operator() (pair<pair<long long, long long>, long long>& a, pair<pair<long long, long long>, long long>& b) {
+   
+        return a.first.second > b.first.second;
+    }
+};
+
+priority_queue<pair<pair<long long, long long>, long long>, vector<pair<pair<long long, long long>, long long>>, compareBySecond> que;
+vector<pair<pair<long long, long long>, long long>> v;
+
+int main() {
+    long long countOfTasks;
+    cin >> countOfTasks;
+
+    for (long long i = 0; i < countOfTasks; i++) {
+        long long neededTime;
+        cin >> neededTime;
+        v.push_back({ {i + 1, neededTime}, i });
+    }
+
+    sort(v.begin(), v.end());
+    long long cur = 0, index = 0;
+    vector<long long> result;
+    long min = 200000000,max=0;
+
+    while (1) {
+        long long i;
+        for (i = index; i < countOfTasks; i++) {
+            if (v[i].first.first <= cur) {
+                que.push(v[i]);
+            }
+            else {
+                index = i;
+                break;
+            }
+        }
+
+        if (i == countOfTasks) {
+            index = countOfTasks;
+        }
+
+        if (!que.empty()) {
+
+            pair<pair<long long, long long>,long long> tmp = que.top();
+            result.push_back(tmp.second);
+
+            long long p = (cur - tmp.first.first) + tmp.first.second;
+            
+            cur += tmp.first.second;
+            if (p < min) {
+                min = p;
+            }
+            else if(p>max) {
+                max = p;
+            }
+            que.pop();
+        }
+        else {
+            if (index != countOfTasks)
+                cur = v[index].first.first;
+        }
+
+        if (index == countOfTasks && que.empty()) break;
+    }
+
+    cout << min<<" "<<max;
+ 
+    return 0;
+}
